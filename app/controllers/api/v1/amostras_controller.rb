@@ -42,7 +42,7 @@ module Api
 			# Parametros aceitos
 			private
 			def amostra_params
-				params.permit(:json)
+				params.permit(:json, :img, :text)
 			end
 		end
 	end
