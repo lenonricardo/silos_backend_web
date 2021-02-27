@@ -1,19 +1,16 @@
 module Api
 	module V1
 		class AmostrasController < ApplicationController
-			# Listar todos os artigos
 			def index
 				amostra = Amostra.order('created_at DESC');
 				render json: {status: 'SUCCESS', message:'Amostras carregadas', data:amostra},status: :ok
 			end
 
-			# Listar artigo passando ID
 			def show
 				amostra = Amostra.find(params[:id])
 				render json: {status: 'SUCCESS', message:'Loaded amostra', data:amostra},status: :ok
 			end
 
-			# Criar um novo artigo
 			def create
 				amostra = Amostra.new(amostra_params)
 				if amostra.save
@@ -23,7 +20,6 @@ module Api
 				end
 			end
 
-			# Excluir artigo
 			def destroy
 				amostra = Amostra.find(params[:id])
 				amostra.destroy
@@ -39,7 +35,6 @@ module Api
 				end
 			end
 
-			# Parametros aceitos
 			private
 			def amostra_params
 				params.permit(:json, :img, :text)

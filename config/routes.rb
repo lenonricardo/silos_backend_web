@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 			resources :testes
 			resources :amostras
 			resources :items
+			resources :users
 			post 'authenticate', to: 'authentication#authenticate'
 		end
 	end
