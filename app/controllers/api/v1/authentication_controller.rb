@@ -5,9 +5,10 @@ module Api
 
 			def authenticate
 				command = AuthenticateUser.call(params[:email], params[:password])
+				user = User.where(["email = ?", params[:email]]).select("name, email, id, nivel").first
 
 				if command.success?
-					render json: { auth_token: command.result }
+					render json: { auth_token: command.result, user: user }
 				else
 					render json: { error: command.errors }, status: :unauthorized
 				end

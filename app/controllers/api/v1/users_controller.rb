@@ -14,9 +14,9 @@ module Api
 			def create
 				users = User.new(user_params)
 				if users.save
-					render json: {status: 'SUCCESS', message:'Saved user', data:users},status: :ok
+					render json: {status: 'SUCCESS', message:'Usuário cadastrado com sucesso.', data:users},status: :ok
 				else
-					render json: {status: 'ERROR', message:'users not saved', data:users.errors},status: :unprocessable_entity
+					render json: {status: 'ERROR', message:'Ocorreu um erro ao gravar o cadastro.', data:users.errors},status: :unprocessable_entity
 				end
 			end
 
@@ -37,7 +37,7 @@ module Api
 
 			private
 			def user_params
-				params.permit(:email, :password, :password_confirmation, :name)
+				params.permit(:email, :password, :password_confirmation, :name, :nivel)
 			end
 		end
 	end
