@@ -5,15 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-50.times  do
-	Teste.create({
-		title: Faker::Book.title,
-		body: Faker::Lorem.sentence
-	})
-end
 
-50.times  do
-	Amostra.create({
-		json: Faker::Json.shallow_json
-	})
-end
+User.create!(email: 'master@silos.com' , password: '123456' , password_confirmation: '123456', nivel: 'admin')
+
