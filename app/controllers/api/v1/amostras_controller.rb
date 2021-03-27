@@ -37,7 +37,7 @@ module Api
 
 			private
 			def amostra_params
-				params.permit(:json, :img, :text)
+				params.permit(:json, :img, :descricao, :id_user)
 			end
 		end
 	end
