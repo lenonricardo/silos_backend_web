@@ -23,7 +23,6 @@ module Backend
   class Application < Rails::Application
 	# Initialize configuration defaults for originally generated Rails version.
 	config.load_defaults 6.1
-
 	# Configuration for the application, engines, and railties goes here.
 	#
 	# These settings can be overridden in specific environments using the files
@@ -37,5 +36,13 @@ module Backend
 	# Skip views, helpers and assets when generating a new resource.
 	config.autoload_paths << Rails.root.join('lib')
 	config.api_only = true
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: '*',
+          methods: [:get, :post, :put, :patch, :delete, :options, :head]
+	   end
+    end
   end
 end
