@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_230604) do
+ActiveRecord::Schema.define(version: 2021_04_13_230605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_230604) do
     t.text "img"
     t.string "descricao"
     t.integer "id_user"
+    t.integer "id_empresa"
   end
 
   create_table "empresas", id: :serial, force: :cascade do |t|
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_230604) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "nivel", limit: 5
+    t.index ["email"], name: "uk_users", unique: true
   end
 
   create_table "users_empresas", id: false, force: :cascade do |t|
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_230604) do
     t.integer "id_empresa"
   end
 
+  add_foreign_key "amostras", "empresas", column: "id_empresa", name: "fk_amostras_empresas"
   add_foreign_key "amostras", "users", column: "id_user", name: "fk_amostras_users"
   add_foreign_key "users_empresas", "empresas", column: "id_empresa", name: "fk_users_empresas_empresas", on_delete: :cascade
   add_foreign_key "users_empresas", "users", column: "id_user", name: "fk_users_empresas_users", on_delete: :cascade

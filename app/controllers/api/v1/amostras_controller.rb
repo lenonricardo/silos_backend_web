@@ -2,7 +2,7 @@ module Api
 	module V1
 		class AmostrasController < ApplicationController
 			def index
-				amostra = Amostra.order('created_at DESC');
+				amostra = Amostra.where(["id_empresa = ?", params[:id_empresa].to_i]).order('created_at DESC');
 				render json: {status: 'SUCCESS', message:'Amostras carregadas', data:amostra},status: :ok
 			end
 
@@ -37,7 +37,7 @@ module Api
 
 			private
 			def amostra_params
-				params.permit(:json, :img, :descricao, :id_user)
+				params.permit(:json, :img, :descricao, :id_user, :id_empresa)
 			end
 		end
 	end
