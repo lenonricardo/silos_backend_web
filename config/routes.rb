@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 			resources :empresas
 			resources :users
 			resources :user_empresas
+			get 'carregar_empresas', to: 'user_empresas#carregarEmpresas'
 			post 'authenticate', to: 'authentication#authenticate'
 		end
 	end
