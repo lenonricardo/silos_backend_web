@@ -2,8 +2,13 @@ module Api
 	module V1
 		class UsersController < ApplicationController
 			def index
-				user = User.order('created_at DESC').select('name', 'email', 'id', 'nivel', 'created_at', 'updated_at');
-				render json: {status: 'SUCCESS', message:'users carregadas', data:user},status: :ok
+				users = UsersEmpresa.joins("INNER JOIN users ON users.id = users_empresas.id_user WHERE users_empresas.id_empresa =", params[:id_empresa]).select('name', 'email', 'id_user', 'nivel', 'created_at', 'updated_at')
+				render json: {status: 'SUCCESS', message:'users carregadas', data:users},status: :ok
+			end
+
+			def carregarUsuarios
+				users = User.order('created_at DESC').select('name', 'email', 'id', 'nivel', 'created_at', 'updated_at');
+				render json: {status: 'SUCCESS', message:'users carregadas', data:users},status: :ok
 			end
 
 			def show
@@ -15,8 +20,16 @@ module Api
 				user = User.find_by_email(user_params[:email])
 
 				if !user
-					users = User.new(user_params)
+					users = User.new(
+						email: user_params[:email],
+						password: user_params[:password],
+						password_confirmation: user_params[:password_confirmation],
+						name: user_params[:name],
+						nivel: user_params[:nivel]
+					)
+
 					if users.save
+						UsersEmpresa.new(id_user: users[:id], id_empresa: params[:id_empresa]).save
 						render json: {status: 'SUCCESS', message:'Usuário cadastrado com sucesso.', data:users},status: :ok
 					else
 						render json: {status: 'ERROR', message:'Ocorreu um erro ao gravar o cadastro.', data:users.errors},status: :unprocessable_entity

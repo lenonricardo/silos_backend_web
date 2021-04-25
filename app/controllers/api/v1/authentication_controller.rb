@@ -6,7 +6,7 @@ module Api
 			def authenticate
 				command = AuthenticateUser.call(params[:email], params[:password])
 				user = User.where(["email = ?", params[:email]]).select("name, email, id, nivel").first
-				empresa = UsersEmpresa.where(["id_user = ?", user[:id]]).select('id_empresa').first
+				empresa = UsersEmpresa.joins("INNER JOIN empresas ON empresas.id = users_empresas.id_empresa WHERE users_empresas.id_user =", user[:id].to_s).select('*')
 
 				if command.success?
 					render json: { auth_token: command.result, user: user, empresa: empresa }
